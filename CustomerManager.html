@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" data-ng-app="customerApp">
+<head>
+    <meta charset="utf-8" />    
+    <script src="scripts/angular.min.js"></script>
+    <title>Customer Manager App</title>
+</head>
+<body>
+    <div>
+        <p>Hello, Welcome to Customer-Manager App</p>
+    </div>
+    <div data-ng-view></div>
+    <script>
+        var app = angular.module('customerApp', []);        
+        app.controller('custController', function ($scope) {
+            $scope.customers = [{ name: 'Dave Jones', city: 'Phoenix' }, { name: 'Jamie Riley', city: 'Atlanta' }, { name: 'Heedy Wahlin', city: 'Chandler' }, { name: 'Thomas Winter', city: 'Seattle' }];
+            $scope.addCustomer = function () {
+                $scope.customers.push(
+                    {
+                        name: $scope.newCustomer.name,
+                        city: $scope.newCustomer.city
+                    }
+                );
+            };
+        });
+        app.config(function ($routeProvider) {            
+            $routeProvider
+                .when('/',
+                    {
+                        controller: 'custController',
+                        templateUrl: 'views/View1.html'
+                    })
+                .when('/view2',
+                    {
+                        controller: 'custController',
+                        templateUrl: 'views/View2.html'
+                    })
+                .otherwise({ redirectTo: '/' });
+        });
+    </script>
+</body>
+</html>
